@@ -71,12 +71,19 @@ def save_png(rows, row_idx, outfile):
     Image.fromarray(image_array, mode="L").save(outfile)
 
 
+def save_preview_png(raw_path, row_idx, img_width, outfile):
+    with open(raw_path, "rb") as f:
+        data = np.frombuffer(f.read(row_idx * img_width), dtype=np.uint8)
+    Image.fromarray(data.reshape(row_idx, img_width), mode="L").save(outfile)
+
+
 # Capture
 
 
 def capture():
     start_timestamp = int(time.time())
     outfile = OUTPUT_DIR / f"waterfall_{start_timestamp}.png"
+    rawfile = OUTPUT_DIR / f"waterfall_{start_timestamp}.raw"
 
     window = nuttall(FFT_SIZE)
     avg_count = max(1, round(ROW_SECONDS * SAMPLE_RATE / FFT_SIZE))
@@ -95,29 +102,31 @@ def capture():
         print(f"min_db={min_db:.1f} max_db={max_db:.1f}")
         print(f"avg_count={avg_count} rows={IMG_HEIGHT} (~{IMG_HEIGHT * IMG_WIDTH / 1e6:.0f} MB raw)")
 
-        try:
-            while row_idx < IMG_HEIGHT:
-                power_sum = np.zeros(FFT_SIZE, dtype=np.float64)
-                for _ in range(avg_count):
-                    iq = read_iq(sock, FFT_SIZE)
-                    power_sum += power_spectrum(iq, window)
+        with open(rawfile, "wb") as raw_f:
+            try:
+                while row_idx < IMG_HEIGHT:
+                    power_sum = np.zeros(FFT_SIZE, dtype=np.float64)
+                    for _ in range(avg_count):
+                        iq = read_iq(sock, FFT_SIZE)
+                        power_sum += power_spectrum(iq, window)
 
-                power_db = 10 * np.log10(power_sum / avg_count + 1e-12)
-                row = np.clip((power_db - min_db) / (max_db - min_db) * 255, 0, 255)
-                rows[row_idx] = row.astype(np.uint8)
-                row_idx += 1
+                    power_db = 10 * np.log10(power_sum / avg_count + 1e-12)
+                    row = np.clip((power_db - min_db) / (max_db - min_db) * 255, 0, 255).astype(np.uint8)
+                    rows[row_idx] = row
+                    raw_f.write(row.tobytes())
+                    row_idx += 1
 
-                if row_idx % 20 == 0 or row_idx == IMG_HEIGHT:
-                    print(f"row {row_idx}/{IMG_HEIGHT}")
+                    if row_idx % 20 == 0 or row_idx == IMG_HEIGHT:
+                        print(f"row {row_idx}/{IMG_HEIGHT}")
 
-                if row_idx % CHECKPOINT_EVERY == 0:
-                    save_png(rows, row_idx, outfile)
+                    if row_idx % CHECKPOINT_EVERY == 0:
+                        raw_f.flush()
 
-        except KeyboardInterrupt:
-            print("Interrupted, saving what we have ...")
-        finally:
-            save_png(rows, row_idx, outfile)
-            print(f"Saved {row_idx} rows to {outfile}")
+            except KeyboardInterrupt:
+                print("Interrupted, saving what we have ...")
+            finally:
+                save_png(rows, row_idx, outfile)
+                print(f"Saved {row_idx} rows to {outfile} (raw dump: {rawfile})")
 
 
 if __name__ == "__main__":
