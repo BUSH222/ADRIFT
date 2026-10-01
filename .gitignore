@@ -1,5 +1,6 @@
 # Custom exceptions for this project
 # Add any project-specific ignores here
+ridges/*.png
 
 # OS generated files
 .DS_Store

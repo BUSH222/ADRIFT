@@ -1,9 +1,15 @@
 [project]
-name = "template"
+name = "ADRIFT"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "ipykernel>=7.4.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pyvips[binary]>=3.2.0",
+    "scipy>=1.18.1",
+]
 
 [dependency-groups]
 dev = [
