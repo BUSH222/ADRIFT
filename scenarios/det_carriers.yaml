@@ -1,0 +1,35 @@
+# Detection test 1: a ladder of zombie carriers over the full terrestrial environment.
+#
+# Seven unmodulated carriers whose zenith C/N0 steps from 45 down to 15 dB-Hz, one keyed + tumbling zombie (the
+# preset's behaviour with a shorter off time), and one carrier parked inside the busy VDL Mode 2 channel
+# (136.975 MHz) to test burst immunity. VDL, AM voice, birdies, USB humps and the 138.11 MHz carrier come from the
+# included environment.
+#
+#   cd ASSIST && uv run assist run ../scenarios/det_carriers.yaml --sink cu8 -o ../out/det_carriers
+version: 1
+seed: 11
+clock: {start: "2026-11-14T10:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - {id: z45, preset: zombie, freq_hz: 137.350e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 45},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 45, direction: desc, side: east}}}
+  - {id: z40, preset: zombie, freq_hz: 136.420e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 40},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 70, direction: asc, side: west}}}
+  - {id: z35, preset: zombie, freq_hz: 136.560e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 35},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 30, direction: desc, side: west}}}
+  - {id: z30, preset: zombie, freq_hz: 136.770e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 30},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 60, direction: asc, side: east}}}
+  - {id: z25, preset: zombie, freq_hz: 137.060e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 25},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 80, direction: desc, side: east}}}
+  - {id: z20, preset: zombie, freq_hz: 137.420e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 20},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 75, direction: asc, side: west}}}
+  - {id: z15, preset: zombie, freq_hz: 137.580e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 15},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 85, direction: desc, side: west}}}
+  # keyed 40 s on / 60 s off, tumbling (7.5 s, 6 dB), low orbit = fastest Doppler
+  - {id: zkey, preset: zombie, freq_hz: 136.300e6, schedule: {on_s: 40, off_s: 60}, level: {cn0_zenith_dbhz: 38},
+     orbit: {synthetic_pass: {aos: +2min, max_el_deg: 88, direction: asc, side: east, alt_km: 450, inc_deg: 82}}}
+  # inside the VDL Mode 2 channel
+  - {id: zvdl, preset: zombie, freq_hz: 136.9710e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 35},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 50, direction: asc, side: east}}}

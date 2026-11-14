@@ -1,0 +1,13 @@
+# Detection test 3: no satellites at all, only the terrestrial environment (VDL, AM voice, birdies, USB humps,
+# the 138.11 MHz carrier). Everything a detector reports here that is not a birdie or the 138 MHz carrier is a
+# false alarm. USB humps are made more frequent than measured (2/h) so that a 16 min window contains some.
+#
+#   cd ASSIST && uv run assist run ../scenarios/det_empty.yaml --sink cu8 -o ../out/det_empty
+version: 1
+seed: 13
+clock: {start: "2026-11-14T10:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - {id: usb-humps, comb: {schedule: {rate_per_hour: 12}}}

@@ -1,0 +1,37 @@
+# Detection test 2: suppressed-carrier signals over the full terrestrial environment.
+#
+# Narrowband continuous PSK (ORBCOMM-subscriber-like SDPSK, 4800 sym/s) and wideband continuous OQPSK (METEOR-LRPT-like,
+# 72 ksym/s), each as a ladder of levels. Frequencies are arbitrary on purpose: the detector must not know channel plans.
+#
+#   cd ASSIST && uv run assist run ../scenarios/det_modulated.yaml --sink cu8 -o ../out/det_modulated
+version: 1
+seed: 12
+clock: {start: "2026-11-14T10:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - id: psk-cal            # ORBCOMM at its calibrated level, on two real channels
+    preset: orbcomm
+    channels: [S-5, S-8]
+    gateway: {enabled: false}
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 50, direction: asc, side: west, alt_km: 750, inc_deg: 70}}
+  - id: psk-ladder
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 65, direction: desc, side: east}}
+    emitters:
+      - {id: p50, signal: {kind: sdpsk}, freq_hz: 136.380e6, level: {cn0_zenith_dbhz: 50}}
+      - {id: p45, signal: {kind: sdpsk}, freq_hz: 136.520e6, level: {cn0_zenith_dbhz: 45}}
+      - {id: p40, signal: {kind: sdpsk}, freq_hz: 136.600e6, level: {cn0_zenith_dbhz: 40}}
+      - {id: p35, signal: {kind: sdpsk}, freq_hz: 136.740e6, level: {cn0_zenith_dbhz: 35}}
+      - {id: p30, signal: {kind: sdpsk}, freq_hz: 136.830e6, level: {cn0_zenith_dbhz: 30}}
+  - id: wide-cal           # METEOR at its calibrated level
+    preset: meteor_lrpt
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 40, direction: desc, side: west}}
+  - id: wide-ladder
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 65, direction: asc, side: east}}
+    emitters:
+      - {id: w60, signal: {kind: oqpsk, params: {framing: random}}, freq_hz: 137.060e6, level: {cn0_zenith_dbhz: 60}}
+      - {id: w52, signal: {kind: oqpsk, params: {framing: random}}, freq_hz: 137.350e6, level: {cn0_zenith_dbhz: 52}}
+      - {id: w45, signal: {kind: oqpsk, params: {framing: random}}, freq_hz: 137.580e6, level: {cn0_zenith_dbhz: 45}}

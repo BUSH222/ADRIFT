@@ -1,0 +1,43 @@
+# Detection test 4 (hold-out): a mixed sky that the detector was not tuned on.
+#
+# Different seed and hour than tests 1-3. Zombies of several behaviours (steady, keyed, tumbling, low and high
+# orbits), ORBCOMM-like PSK, a METEOR-like wideband signal, plus two things the detector is asked to IGNORE:
+# an ORBCOMM gateway (bursts every 0.95 s) and SpaceBEE-style LoRa packets.
+#
+#   cd ASSIST && uv run assist run ../scenarios/det_mixed.yaml --sink cu8 -o ../out/det_mixed
+version: 1
+seed: 99
+clock: {start: "2026-11-14T19:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - {id: usb-humps, comb: {schedule: {rate_per_hour: 6}}}
+  - {id: m-steady, preset: zombie, freq_hz: 136.6512e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 33},
+     orbit: {synthetic_pass: {aos: +30s, max_el_deg: 55, direction: desc, side: west, alt_km: 1050, inc_deg: 90}}}
+  - {id: m-weak, preset: zombie, freq_hz: 137.2731e6, schedule: {type: continuous}, am: null, level: {cn0_zenith_dbhz: 22},
+     orbit: {synthetic_pass: {aos: +2min, max_el_deg: 35, direction: asc, side: east}}}
+  - {id: m-tumble, preset: zombie, freq_hz: 136.1740e6, schedule: {type: continuous}, level: {cn0_zenith_dbhz: 30},
+     am: {period_s: 4.0, depth_db: 10},
+     orbit: {synthetic_pass: {aos: +3min, max_el_deg: 70, direction: desc, side: east, alt_km: 600, inc_deg: 97.8}}}
+  - {id: m-keyed, preset: zombie, freq_hz: 137.6410e6, level: {cn0_zenith_dbhz: 36},      # preset: 40 s on / 180 s off, tumbling
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 80, direction: asc, side: west}}}
+  - {id: m-late, preset: zombie, freq_hz: 136.8804e6, schedule: {on_s: 80, off_s: 80}, am: null, level: {cn0_zenith_dbhz: 28},
+     orbit: {synthetic_pass: {aos: +6min, max_el_deg: 25, direction: desc, side: east, alt_km: 500, inc_deg: 65}}}
+  - id: m-psk
+    preset: orbcomm
+    gateway: {enabled: true}                # the gateway bursts are a signal to ignore
+    orbit: {synthetic_pass: {aos: +2min, max_el_deg: 30, direction: desc, side: west, alt_km: 750, inc_deg: 47}}
+  - id: m-psk-weak
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 45, direction: asc, side: east, alt_km: 700, inc_deg: 98}}
+    emitters:
+      - {id: a, signal: {kind: sdpsk}, freq_hz: 136.4633e6, level: {cn0_zenith_dbhz: 38}}
+      - {id: b, signal: {kind: sdpsk, params: {rs: 9600}}, freq_hz: 137.0890e6, level: {cn0_zenith_dbhz: 42}}
+  - id: m-wide
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +4min, max_el_deg: 50, direction: desc, side: east}}
+    emitters:
+      - {id: w, signal: {kind: oqpsk, params: {framing: random, rs: 40000}}, freq_hz: 137.4500e6, level: {cn0_zenith_dbhz: 55}}
+  - {id: m-lora, preset: spacebee, freq_hz: 137.9265e6, schedule: {mean_gap_s: 40, min_gap_s: 20},
+     orbit: {synthetic_pass: {aos: +1min, max_el_deg: 60, direction: asc, side: east}}}
