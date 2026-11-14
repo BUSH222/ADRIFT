@@ -1,0 +1,37 @@
+# Tracking test A: dynamics and dropouts.
+#
+# A ladder of steady carriers on a low (400 km), nearly overhead pass, i.e. the fastest Doppler a 137 MHz tracker
+# meets (about -65 Hz/s at closest approach), plus carriers that switch off or fade: three keying patterns and two
+# tumbling ones. All emitters of one source share its Doppler curve, so they never cross each other.
+#
+#   cd ASSIST && uv run assist run ../scenarios/trk_dyn.yaml --sink cu8 -o ../out/trk_dyn
+version: 1
+seed: 21
+clock: {start: "2026-11-14T14:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - id: fast
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 86, direction: desc, side: east, alt_km: 400, inc_deg: 97}}
+    emitters:
+      - {id: c40, signal: {kind: cw}, freq_hz: 136.300e6, level: {cn0_zenith_dbhz: 40}}
+      - {id: c30, signal: {kind: cw}, freq_hz: 136.380e6, level: {cn0_zenith_dbhz: 30}}
+      - {id: c25, signal: {kind: cw}, freq_hz: 136.560e6, level: {cn0_zenith_dbhz: 25}}
+      - {id: c20, signal: {kind: cw}, freq_hz: 136.640e6, level: {cn0_zenith_dbhz: 20}}
+      - {id: c15, signal: {kind: cw}, freq_hz: 136.720e6, level: {cn0_zenith_dbhz: 15}}
+  - id: keyed
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +2min, max_el_deg: 70, direction: asc, side: west, alt_km: 600, inc_deg: 82}}
+    emitters:
+      - {id: k40-180, signal: {kind: cw}, freq_hz: 137.300e6, level: {cn0_zenith_dbhz: 38},
+         schedule: {type: on_off, on_s: 40, off_s: 180, phase_s: 20}}
+      - {id: k80-80, signal: {kind: cw}, freq_hz: 137.380e6, level: {cn0_zenith_dbhz: 32},
+         schedule: {type: on_off, on_s: 80, off_s: 80, phase_s: 0}}
+      - {id: k10-10, signal: {kind: cw}, freq_hz: 137.460e6, level: {cn0_zenith_dbhz: 35},
+         schedule: {type: on_off, on_s: 10, off_s: 10, phase_s: 0}}
+      - {id: t7, signal: {kind: cw}, freq_hz: 137.620e6, level: {cn0_zenith_dbhz: 32},
+         am: {period_s: 7.5, depth_db: 6}}
+      - {id: t4deep, signal: {kind: cw}, freq_hz: 137.700e6, level: {cn0_zenith_dbhz: 32},
+         am: {period_s: 4.0, depth_db: 15}}

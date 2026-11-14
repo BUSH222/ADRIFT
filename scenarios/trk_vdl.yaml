@@ -1,0 +1,24 @@
+# Tracking test B: signals buried inside the VDL channels.
+#
+# 136.975 MHz carries VDL Mode 2 (D8PSK) and 136.925 MHz VDL Mode 4 (GFSK) bursts from ground stations and aircraft,
+# 20-40 dB above the noise, several per second. Three carriers (40, 20 and 26 dB-Hz at zenith) sit inside the Mode 2
+# channel at -7, 0 and +7 kHz from its centre; a 32 dB-Hz carrier and a narrowband PSK signal sit inside the Mode 4
+# channel. All are emitters of one satellite, so they share a Doppler curve and never cross.
+#
+#   cd ASSIST && uv run assist run ../scenarios/trk_vdl.yaml --sink cu8 -o ../out/trk_vdl
+version: 1
+seed: 22
+clock: {start: "2026-11-14T15:00:00Z", duration: 16min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+include: [bands/vhf137/terrestrial_default.yaml]
+sources:
+  - id: invdl
+    platform: satellite
+    orbit: {synthetic_pass: {aos: +1min, max_el_deg: 75, direction: asc, side: east}}
+    emitters:
+      - {id: v40, signal: {kind: cw}, freq_hz: 136.968e6, level: {cn0_zenith_dbhz: 40}}
+      - {id: v20, signal: {kind: cw}, freq_hz: 136.975e6, level: {cn0_zenith_dbhz: 20}}
+      - {id: v26, signal: {kind: cw}, freq_hz: 136.982e6, level: {cn0_zenith_dbhz: 26}}
+      - {id: v32, signal: {kind: cw}, freq_hz: 136.918e6, level: {cn0_zenith_dbhz: 32}}
+      - {id: p50, signal: {kind: sdpsk}, freq_hz: 136.9265e6, level: {cn0_zenith_dbhz: 50}}
