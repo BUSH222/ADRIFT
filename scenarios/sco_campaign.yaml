@@ -1,0 +1,190 @@
+# Scoring campaign: a pool of transmitters on catalog orbits, used through `assist truth` only (no IQ).
+# Written by 2_scoring_lib.write_campaign_scenario; keying, oscillator behaviour and measurement errors are
+# added at track level by the emulator in 2_scoring_lib.
+version: 1
+seed: 2
+clock: {start: "2026-11-14T00:00:00Z", duration: 14d}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+elements: {files: [elements/active_2026-11-14.csv, elements/satnogs_2026-11-14.csv]}
+sources:
+  - id: n965
+    orbit: {norad: 965, perturb: {along_track_s: -0.1130, raan_deg: -0.00353}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n1804
+    orbit: {norad: 1804, perturb: {along_track_s: -0.2356, raan_deg: 0.00011}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n4256
+    orbit: {norad: 4256, perturb: {along_track_s: 0.2976, raan_deg: 0.00736}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n4237
+    orbit: {norad: 4237, perturb: {along_track_s: 0.1792, raan_deg: 0.00364}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n5680
+    orbit: {norad: 5680, perturb: {along_track_s: 0.0533, raan_deg: 0.00081}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n44207
+    orbit: {norad: 44207, perturb: {along_track_s: -0.2796, raan_deg: -0.01165}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n56154
+    orbit: {norad: 56154, perturb: {along_track_s: -0.2469, raan_deg: 0.00927}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n25544
+    orbit: {norad: 25544, perturb: {along_track_s: -0.1661, raan_deg: 0.00618}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n60211
+    orbit: {norad: 60211, perturb: {along_track_s: -0.2959, raan_deg: -0.00303}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68892
+    orbit: {norad: 68892, perturb: {along_track_s: -0.2537, raan_deg: 0.00676}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68429
+    orbit: {norad: 68429, perturb: {along_track_s: 0.4931, raan_deg: -0.01278}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n27424
+    orbit: {norad: 27424, perturb: {along_track_s: 0.0684, raan_deg: -0.00859}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n57833
+    orbit: {norad: 57833, perturb: {along_track_s: 0.1750, raan_deg: 0.01680}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n36596
+    orbit: {norad: 36596, perturb: {along_track_s: -0.1371, raan_deg: 0.01001}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n58300
+    orbit: {norad: 58300, perturb: {along_track_s: -0.0326, raan_deg: -0.00747}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n63919
+    orbit: {norad: 63919, perturb: {along_track_s: -0.1008, raan_deg: 0.01175}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n61222
+    orbit: {norad: 61222, perturb: {along_track_s: 0.1070, raan_deg: -0.00080}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n58259
+    orbit: {norad: 58259, perturb: {along_track_s: -0.0429, raan_deg: -0.00628}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n52793
+    orbit: {norad: 52793, perturb: {along_track_s: 0.1664, raan_deg: 0.02195}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n67264
+    orbit: {norad: 67264, perturb: {along_track_s: -0.0411, raan_deg: -0.01051}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n56964
+    orbit: {norad: 56964, perturb: {along_track_s: 0.0989, raan_deg: 0.00552}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n65559
+    orbit: {norad: 65559, perturb: {along_track_s: 0.2770, raan_deg: -0.01227}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n25159
+    orbit: {norad: 25159, perturb: {along_track_s: 0.0769, raan_deg: -0.00860}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n67282
+    orbit: {norad: 67282, perturb: {along_track_s: 0.3534, raan_deg: 0.00780}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n25991
+    orbit: {norad: 25991, perturb: {along_track_s: -0.0466, raan_deg: -0.01235}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n65964
+    orbit: {norad: 65964, perturb: {along_track_s: 0.4887, raan_deg: -0.00143}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n38734
+    orbit: {norad: 38734, perturb: {along_track_s: 0.2335, raan_deg: -0.01952}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n67750
+    orbit: {norad: 67750, perturb: {along_track_s: 0.0360, raan_deg: 0.00802}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n56944
+    orbit: {norad: 56944, perturb: {along_track_s: -0.5508, raan_deg: 0.00288}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68444
+    orbit: {norad: 68444, perturb: {along_track_s: 0.3268, raan_deg: -0.01497}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n57188
+    orbit: {norad: 57188, perturb: {along_track_s: -0.0314, raan_deg: -0.00349}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n40109
+    orbit: {norad: 40109, perturb: {along_track_s: -0.1591, raan_deg: -0.00634}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n61224
+    orbit: {norad: 61224, perturb: {along_track_s: -0.2278, raan_deg: -0.00781}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n60562
+    orbit: {norad: 60562, perturb: {along_track_s: -0.0157, raan_deg: 0.00080}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n52754
+    orbit: {norad: 52754, perturb: {along_track_s: -0.3397, raan_deg: -0.00612}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n29506
+    orbit: {norad: 29506, perturb: {along_track_s: 0.0254, raan_deg: 0.01215}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n54699
+    orbit: {norad: 54699, perturb: {along_track_s: 0.3067, raan_deg: -0.00028}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n65316
+    orbit: {norad: 65316, perturb: {along_track_s: 0.0291, raan_deg: -0.01437}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n39013
+    orbit: {norad: 39013, perturb: {along_track_s: 0.0191, raan_deg: -0.01915}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n64578
+    orbit: {norad: 64578, perturb: {along_track_s: -0.0979, raan_deg: -0.01327}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n69572
+    orbit: {norad: 69572, perturb: {along_track_s: -0.1932, raan_deg: 0.00137}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n69897
+    orbit: {norad: 69897, perturb: {along_track_s: 0.0516, raan_deg: 0.01268}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n101327
+    orbit: {norad: 101327, perturb: {along_track_s: 0.0547, raan_deg: -0.00522}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n69901
+    orbit: {norad: 69901, perturb: {along_track_s: 0.1598, raan_deg: -0.01694}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n58760
+    orbit: {norad: 58760, perturb: {along_track_s: 0.4218, raan_deg: -0.02169}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68435
+    orbit: {norad: 68435, perturb: {along_track_s: 0.1645, raan_deg: 0.00538}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68927
+    orbit: {norad: 68927, perturb: {along_track_s: -0.1495, raan_deg: -0.00461}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n1002
+    orbit: {norad: 1002, perturb: {along_track_s: -0.3785, raan_deg: 0.00097}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n68419
+    orbit: {norad: 68419, perturb: {along_track_s: 0.1327, raan_deg: -0.00559}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n65965
+    orbit: {norad: 65965, perturb: {along_track_s: 0.1039, raan_deg: 0.00675}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n65116
+    orbit: {norad: 65116, perturb: {along_track_s: -0.1964, raan_deg: 0.00842}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n67276
+    orbit: {norad: 67276, perturb: {along_track_s: 0.1117, raan_deg: 0.00060}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n57193
+    orbit: {norad: 57193, perturb: {along_track_s: 0.1897, raan_deg: 0.00300}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n58021
+    orbit: {norad: 58021, perturb: {along_track_s: -0.1850, raan_deg: -0.00659}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n58201
+    orbit: {norad: 58201, perturb: {along_track_s: 0.0530, raan_deg: 0.01095}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n100968
+    orbit: {norad: 100968, perturb: {along_track_s: 0.0417, raan_deg: -0.00407}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n25397
+    orbit: {norad: 25397, perturb: {along_track_s: 0.0071, raan_deg: -0.01190}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n66757
+    orbit: {norad: 66757, perturb: {along_track_s: 0.2829, raan_deg: 0.01400}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n43790
+    orbit: {norad: 43790, perturb: {along_track_s: 0.4132, raan_deg: 0.00871}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]
+  - id: n40062
+    orbit: {norad: 40062, perturb: {along_track_s: -0.1734, raan_deg: -0.00150}}
+    emitters: [{id: c, signal: {kind: cw}, freq_hz: 137.0e6, level: {cn0_zenith_dbhz: 40}}]

@@ -1,0 +1,35 @@
+# Detection test 5: VDL burst level ladder, to find the level below which burst excision stops working.
+#
+# Nine VDL Mode 2 ground stations (D8PSK, ~22-25 ms bursts, 3 per second each), 150 kHz apart, each at a fixed level.
+# Levels are set so that the peak of the burst spectrum is -12 ... +12 dB relative to the noise density in 3 dB
+# steps (C/N0 = step + 10 log10(10 500 sym/s) = step + 40.2 dB-Hz); on a waterfall frame that lies inside a burst
+# the bump over the floor is 10 log10(1 + ratio): 0.3 dB for the weakest, 12.3 dB for the strongest.
+# Every station sits at the same position in the detector's 9.4 kHz burst-flag channel grid as the real 136.975 MHz
+# channel. No terrestrial environment (no birdies, humps, AM), no satellites: anything detected is a burst leftover.
+# The first 60 s are empty (hourly rate 0 until 11:00 UTC), so the modulated detector's quiet reference is burst-free.
+#
+#   cd ASSIST && uv run assist run ../scenarios/det_vdl_ladder.yaml --sink cu8 -o ../out/det_vdl_ladder
+version: 1
+seed: 15
+clock: {start: "2026-11-14T10:59:00Z", duration: 9min}
+station: {lat: 55.5, lon: 37.1, alt_m: 172}
+profile: profiles/vhf137
+sources:
+  - {id: vdlm12, preset: vdl_ground, freq_hz: 136.375e6, level: {cn0_dbhz: 28.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlm09, preset: vdl_ground, freq_hz: 136.525e6, level: {cn0_dbhz: 31.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlm06, preset: vdl_ground, freq_hz: 136.675e6, level: {cn0_dbhz: 34.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlm03, preset: vdl_ground, freq_hz: 136.825e6, level: {cn0_dbhz: 37.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlp00, preset: vdl_ground, freq_hz: 136.975e6, level: {cn0_dbhz: 40.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlp03, preset: vdl_ground, freq_hz: 137.125e6, level: {cn0_dbhz: 43.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlp06, preset: vdl_ground, freq_hz: 137.275e6, level: {cn0_dbhz: 46.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlp09, preset: vdl_ground, freq_hz: 137.425e6, level: {cn0_dbhz: 49.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
+  - {id: vdlp12, preset: vdl_ground, freq_hz: 137.575e6, level: {cn0_dbhz: 52.2},
+     schedule: {rate_per_hour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800, 10800], min_gap_s: 0.05}}
